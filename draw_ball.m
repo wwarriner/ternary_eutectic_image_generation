@@ -12,8 +12,17 @@
 % See the License for the specific language governing permissions and
 % limitations under the License.
 
-function arr = create_array_by_fill( fill_value, x, y )
+function ball_array = draw_ball( diameter )
 
-arr = repmat( fill_value, x, y );
+integer_size = round( diameter );
+
+grid = ( 1:integer_size ) - 0.5;
+[ size_x, size_y ] = meshgrid( grid, grid );
+
+integer_diameter = integer_size - 0.5;
+ball_array = ...
+    ( size_y - integer_size / 2 ).^ 2 ...
+    + ( size_x - integer_size / 2 ) .^ 2 ...
+    <= ( integer_diameter / 2 ) .^ 2;
 
 end

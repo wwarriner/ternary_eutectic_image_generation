@@ -1,4 +1,4 @@
-% Copyright 2015 William Warriner and Subhojit Chakraborty
+% Copyright 2017 William Warriner
 % 
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -12,30 +12,26 @@
 % See the License for the specific language governing permissions and
 % limitations under the License.
 
-% Setting up relevant variables.
 micro_x_px = 800;
-micro_y_px = 200;
+micro_y_px = 600;
 
-alpha_spacing_px = 100;
+lamella_spacing_px = 100;
 
-alpha_volume_fraction = 0.2;
-beta_volume_fraction = 0.4;
+alpha_volume_fraction = 0.1;
+beta_volume_fraction = 0.8;
 
 alpha_value = 0.0;
 beta_value = 0.5;
 gamma_value = 1.0;
 
-scaling = 0.25;
-rotation = 22;
-translation = [ 50, 20 ];
+scaling = 1;
+rotation = 0;
+translation = [ 0, 0 ];
 
-% Inputs and output are defined in the documentation for this function.
-% This is the function you will want to use. Right-click + help on
-% selection with the function name selected, or open the file.
-microstructure = three_lamella_microstructure( ...
+microstructure = two_lamella_one_rod_microstructure( ...
     micro_x_px, ...
     micro_y_px, ...
-    alpha_spacing_px, ...
+    lamella_spacing_px, ...
     alpha_volume_fraction, ...
     beta_volume_fraction, ...
     alpha_value, ...
@@ -46,8 +42,10 @@ microstructure = three_lamella_microstructure( ...
     translation ...
 );
 
-% A test function to see what the microstructure's volume fractions are.
-[test_va, test_vb] = ternary_microstructure_test( microstructure, alpha_value, beta_value );
+[test_va, test_vb] = ternary_microstructure_test( ...
+    microstructure, ...
+    alpha_value, ...
+    beta_value ...
+    );
 
-% Look at the microstructure image.
 imtool( microstructure );

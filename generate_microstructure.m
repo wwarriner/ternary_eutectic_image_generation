@@ -1,4 +1,4 @@
-% Copyright 2015 William Warriner and Subhojit Chakraborty
+% Copyright 2017 William Warriner
 % 
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -20,16 +20,7 @@ function microstructure = generate_microstructure( ...
     rotation, ...
     translation ...
     )
-% GENERATE_MICROSTRUCTURE
-%{
 
-Generates a microstructure image array from a given unit cell by tiling.
-Also performs rigid transformations based on an input scaling factor,
-rotation angle, and translation vector.
-
-%}
-
-% scale unit cell
 unit_cell_s = imresize( unit_cell, scaling, 'nearest' );
 scaled_size = size( unit_cell_s );
 
@@ -45,7 +36,7 @@ m_t = repmat( tiled_m, 2, 2 );
 m_r = rotate_m( m_t, rotation );
 
 t = translation(:) + 1;
-microstructure = m_r( t(2):microstructure_y_length_px, t(1):microstructure_x_length_px );
+microstructure = m_r( t(1):microstructure_x_length_px, t(2):microstructure_y_length_px );
 
 end
 

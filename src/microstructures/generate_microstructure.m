@@ -12,31 +12,33 @@
 % See the License for the specific language governing permissions and
 % limitations under the License.
 
-function microstructure = generate_microstructure( ...
+function im = generate_microstructure( ...
     unit_cell, ...
-    microstructure_x_length_px, ...
-    microstructure_y_length_px, ...
-    scaling, ...
-    rotation, ...
-    translation ...
+    image_size, ...
+    transformation ...
     )
 
-unit_cell_s = imresize( unit_cell, scaling, 'nearest' );
-scaled_size = size( unit_cell_s );
+% scale unit cell
+im = imresize( unit_cell, transformation.scaling_factor, 'nearest' );
+scaled_size = size( im );
 
 % generate scaled_microstructure
-x_tilings = ceil( microstructure_x_length_px / scaled_size( 1 ) );
-y_tilings = ceil( microstructure_y_length_px / scaled_size( 2 ) );
-tiled_m = repmat( unit_cell_s, x_tilings, y_tilings );
+x_tilings = ceil( image_size( 1 ) / scaled_size( 1 ) );
+y_tilings = ceil( image_size( 2 ) / scaled_size( 2 ) );
+im = repmat( im, x_tilings, y_tilings );
 
-% translate
-m_t = repmat( tiled_m, 2, 2 );
+% pad
+im = repmat( im, 2, 2 );
 
 % rotate
-m_r = rotate_m( m_t, rotation );
+im = rotate_m( im, transformation.rotation_angle );
 
-t = translation(:) + 1;
-microstructure = m_r( t(1):microstructure_x_length_px, t(2):microstructure_y_length_px );
+% translate and crop
+t = round( transformation.translation_vector ) + 1;
+im = im( ...
+    t( 1 ) : t( 1 ) + image_size( 1 ), ...
+    t( 2 ) : t( 1 ) + image_size( 2 ) ...
+    );
 
 end
 

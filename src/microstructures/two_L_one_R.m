@@ -105,7 +105,6 @@ function unit_cell = fill_alpha_phase( ...
     unit_cell ...
     )
 
-unit_cell = circshift( unit_cell, r_a, 2 );
 row_spacing = round( compute_row_spacing( rod_spacing ) );
 d_a = 2 * r_a;
 ball = draw_ball( d_a );

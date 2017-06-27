@@ -18,12 +18,10 @@ t_a = width_of_alpha_phase( ...
     features.vf_alpha, ...
     features.lambda_1 ...
     );
-
 t_b = width_of_beta_phase( ...
     features.vf_beta, ...
     features.lambda_1 ...
     );
-
 unit_cell = generate_unit_cell( ...
     t_a, ...
     t_b, ...
@@ -59,31 +57,26 @@ unit_cell = create_array_by_fill( ...
     features.lambda_1, ...
     features.lambda_1 ...
     );
-unit_cell = fill_alpha_phase( t_a, features.alpha, unit_cell );
+unit_cell = fill_alpha_phase( t_a, t_b, features.alpha, unit_cell );
 unit_cell = fill_beta_phase( t_b, t_a, features.beta, unit_cell );
 
 end
 
 
 
-function unit_cell = fill_alpha_phase ( alpha_size, alpha_value, unit_cell )
+function unit_cell = fill_alpha_phase ( t_a, t_b, alpha, unit_cell )
 
-unit_cell( 1:end, 1:alpha_size ) = alpha_value;
-
-end
-
-
-
-function unit_cell = fill_beta_phase( beta_size, alpha_size, beta_value, unit_cell)
-
-unit_cell( 1:end, 1+alpha_size:alpha_size+beta_size )= beta_value;
+first_stop = floor( t_a / 2 ) + 1;
+unit_cell( 1 : end, 1 : first_stop ) = alpha;
+unit_cell( 1 : end, ( first_stop + t_b ) : ( t_a + t_b + 1 ) ) = alpha;
 
 end
 
 
 
-function arr = create_array_by_fill( fill_value, x )
+function unit_cell = fill_beta_phase( t_b, t_a, beta, unit_cell)
 
-arr = repmat( fill_value, x );
+first_stop = floor( t_a / 2 ) + 1;
+unit_cell( 1 : end, first_stop : ( first_stop + t_b ) ) = beta;
 
 end

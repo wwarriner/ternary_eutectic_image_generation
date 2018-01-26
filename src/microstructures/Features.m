@@ -53,7 +53,7 @@ classdef (Sealed) Features
             
             if obj.lambda_2 > 0
                 
-                s = [ s '_2L' obj.fmt_L( obj.lambda_1 ) ];
+                s = [ s '_2L' obj.fmt_L( obj.lambda_2 ) ];
                 
             end
             

@@ -31,13 +31,17 @@ im = repmat( im, x_tilings, y_tilings );
 im = repmat( im, 2, 2 );
 
 % rotate
-im = rotate_m( im, transformation.rotation_angle );
+if transformation.rotation_angle ~= 0
+    
+    im = rotate_m( im, transformation.rotation_angle );
+    
+end
 
 % translate and crop
 t = round( transformation.translation_vector ) + 1;
 im = im( ...
-    t( 1 ) : t( 1 ) + image_size( 1 ), ...
-    t( 2 ) : t( 1 ) + image_size( 2 ) ...
+    t( 1 ) : t( 1 ) + image_size( 1 ) - 1, ...
+    t( 2 ) : t( 1 ) + image_size( 2 ) - 1 ...
     );
 
 end
@@ -65,6 +69,7 @@ d_n = R*d;
 % compute number of x tilings
 t = ceil( d_n ./ d );
 t = [ max(t); max(t) ];
+
 % generate tiled microstructure from x and y tilings
 tiles = 2*t;
 m_t = repmat( microstructure, tiles(1), tiles(2) );
